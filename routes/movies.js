@@ -17,10 +17,20 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/new', (req, res, next) => {
+  if (!req.session.currentUser) {
+    /// if the user is not logged in no access
+    res.redirect('/auth/login');
+    return;
+  }
   res.render('movies/movie-new');
 });
 
 router.post('/new', (req, res, next) => {
+  if (!req.session.currentUser) {
+    /// if the user is not logged in no access
+    res.redirect('/auth/login');
+    return;
+  }
   const newMovie = new Movie(req.body);
 
   newMovie.save()
@@ -31,6 +41,11 @@ router.post('/new', (req, res, next) => {
 });
 
 router.get('/:movieID', (req, res, next) => {
+  if (!req.session.currentUser) {
+    /// if the user is not logged in no access
+    res.redirect('/auth/login');
+    return;
+  }
   Movie.findById(req.params.movieID)
     .then((result) => {
       const data = {
@@ -42,6 +57,11 @@ router.get('/:movieID', (req, res, next) => {
 });
 
 router.post('/:movieID/delete', (req, res, next) => {
+  if (!req.session.currentUser) {
+    /// if the user is not logged in no access
+    res.redirect('/auth/login');
+    return;
+  }
   Movie.findByIdAndRemove(req.params.movieID)
     .then(() => {
       res.redirect('/movies');
