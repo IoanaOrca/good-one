@@ -1,0 +1,13 @@
+<h1>Movie list</h1>
+
+<a href="movies/new"> Create Movie </a>
+
+<ul>
+  {{#each movies}}
+  <li>{{this.title}}</li>
+      {{this.year}}
+      
+  <p> <a href="/movies/{{this.id}}">Show details</a><p>   
+  {{/each}}
+  </ul>
+
